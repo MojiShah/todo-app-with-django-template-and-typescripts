@@ -1,11 +1,110 @@
-<!DOCTYPE html>
+{% load static%}
+
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>todo list</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Todo Manager</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <main class="page">
+        <!-- header section -->
+      <header class="header">
+        <div>
+          <p class="eyebrow">Django Templates</p>
+          <h1>Todo Manager</h1>
+        </div>
+
+        <a href="{% url 'todo-create' %}" class="button-primary">
+          + New Todo
+        </a>
+      </header>
+
+      <section class="stats">
+        <div class="stat-cart">
+          <p>Total Todos</p>
+          <strong> {{ todos\length }} </strong>
+        </div>
+
+        <div class="stat-cart">
+          <p>Completed</p>
+          <strong class="success">
+            {% for todo in todos %} 
+                {% if todo.is_done %} 
+                    {% if forloop.first %}
+                        1 
+                    {% else %} 
+                        {{ forloop.counter }} 
+                    {% endif %} 
+                {% endif %} 
+                {% empty %} 0 
+            {% endfor %}
+          </strong>
+        </div>
+      </section>
+
+      <section>
+        <div class="section-header">
+          <div>
+            <h2>Your Todos</h2>
+
+            <p>Sorted by priority</p>
+          </div>
+        </div>
+      </section>
+
+      {% if todos %}
+        <div class="todo-list">
+            {% for todo in todos%}
+                <article class="todo-cart">
+                    <div class="todo-top">
+                        <div class="todo-main">
+                            <div class="todo-checkbox
+                                {% if todo.is_done }
+                                    checkes
+                                {%endif%}"
+                            >
+                                {% if todo.is_done %}
+                                    ✓
+                                {% endif %}
+                            </div>
+
+                            <div>
+                                <a href="{% url 'todo-detail' todo.pk %}">
+                                    <h3 class="
+                                        {%if todo.is_done}
+                                            completed
+                                        {%endif%}
+                                    "
+                                    >
+                                         {{ todo.title }}
+                                    </h3>
+                                </a>
+
+                                <p>
+                                    {{todo.content}}
+                                </p>
+                            </div>
+                        </div>
+                        <span class="priority">
+                            Priority : {{todo.priority}}
+                        </span>
+                    </div>
+
+                    <div class="todo-actions">
+                        <a href="{% url 'todo-update' todo.pk%}" class="button edit">Edit</a>
+                        <a href="{% url 'todo-delete' todo.pk%}" class="button delete">Delete</a></div>
+                </article>
+            {% endfor %}
+        </div>
+      {% else %}
+        <div class="empty">
+            <p>No todos found.</p>
+            <span>Create your first todo.</span>
+        </div>
+      {%endif%}
+    </main>
+  </body>
 </html>

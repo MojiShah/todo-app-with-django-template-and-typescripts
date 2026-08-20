@@ -11,6 +11,12 @@ class TodoListView(ListView):
     template_name = 'todo/todo_list.html';
     context_object_name = 'todos';
     
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs);
+        context["completed_count"]=self.object_list.filter(is_done=True).count();
+        return context
+    
+    
 class TodoCreateView(CreateView):
     model = Todo;
     form_class = TodoForm;
