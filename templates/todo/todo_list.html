@@ -31,7 +31,7 @@
         <div class="stat-cart">
           <p>Completed</p>
           <strong class="success">
-            {% for todo in todos %} 
+            <!-- {% for todo in todos %} 
                 {% if todo.is_done %} 
                     {% if forloop.first %}
                         1 
@@ -40,7 +40,8 @@
                     {% endif %} 
                 {% endif %} 
                 {% empty %} 0 
-            {% endfor %}
+            {% endfor %} -->
+            {{ completed_count}}
           </strong>
         </div>
       </section>
