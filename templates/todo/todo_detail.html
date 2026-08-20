@@ -1,11 +1,66 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>todo detail </title>
+    <title>{{ todo.title }}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    
+    <main class="page detail-page">
+        <a href="{% url 'todo-list' %}" class="back">
+            <- Back
+        </a>
+        <div class="detail-card">
+            <div class="todo-top">
+                <div>
+                    <h1 class="
+                        {% if todo.is_done %}
+                            completed
+                        {%endif%} 
+                    ">
+                        {{todo.title}}
+                    </h1>
+                    <p class="detail-content">
+                        {{todo.content}}
+                    </p>
+                </div>
+
+                <span class="priority">
+                    Priority : {{ todo.priority }}
+                </span>
+            </div>
+
+            <div class="detail-footer">
+                <span>
+                    {% if todo.is_done %}
+                        Completed
+                    {% else %}
+                        Not completed
+                    {% endif %}
+                </span>
+
+
+                <div class="todo-actions">
+                
+                    <a
+                        href="{% url 'todo-update' todo.pk %}"
+                        class="button edit"
+                    >
+                        Edit
+                    </a>
+                
+                    <a
+                        href="{% url 'todo-delete' todo.pk %}"
+                        class="button delete"
+                    >
+                        Delete
+                    </a>
+                
+                </div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
